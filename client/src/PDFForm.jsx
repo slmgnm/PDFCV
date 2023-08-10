@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import portfolioSVG from "./portfolio.svg";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+// import portfolioSVG from "./portfolio.svg";
 import "./PDFForm.css";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import OpenAI from "./Openai.jsx";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import SocialLinks from "./SocialLinks";
 import placeholder from "./assets/user.png";
@@ -30,7 +30,7 @@ const CVForm = () => {
         portfolio: "",
         image: "",
       };
-
+  console.log("placeholder", placeholder);
   const [formData, setFormData] = useState(initialFormData);
   useEffect(() => {
     // storing input name
@@ -56,11 +56,18 @@ const CVForm = () => {
   const handleImageChange = (e) => {
     e.preventDefault();
     const image = e.target.files[0];
-    setFormData({
-      ...formData,
-      image,
-    });
+
+    // Read the image as a base64 string
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setFormData({
+        ...formData,
+        image: event.target.result,
+      });
+    };
+    reader.readAsDataURL(image);
   };
+
   const handleLanguageChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevState) => {
@@ -128,7 +135,9 @@ const CVForm = () => {
   };
 
   const handleExportPDF = () => {
-    pdfExportComponent.current.save(`CV-${formData.name}.pdf`);
+    const pdfName = `CV-${formData.name}.pdf`;
+    pdfExportComponent.current.save(pdfName);
+    // console.log("current", pdfExportComponent.current);
   };
 
   return (
@@ -136,46 +145,32 @@ const CVForm = () => {
       <PDFExport
         ref={pdfExportComponent}
         paperSize="auto"
-        style={{ height: "auto", width: "8.5in" }}
+        scale={1}
+        style={{ height: "auto" }}
+        fileName={`${formData.name}-Resume`}
       >
         <div className="container">
           <div className="left">
             <div className="cv-image-container">
-              {formData.image ? (
-                <div className="cv-image-wrapper">
-                  <img
-                    src={
-                      formData.image
-                        ? URL.createObjectURL(new Blob([formData.image]))
-                        : placeholder
-                    }
-                    alt="Profile picture"
-                    className="cv-image-preview"
+              <div className="cv-image-wrapper">
+                <img
+                  src={formData.image ? formData.image : placeholder}
+                  alt="Profile picture"
+                  className="cv-image-preview"
+                />
+                <label className="upload-icon">
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleImageChange}
                   />
-                  <label className="upload-icon">
-                    <input
-                      type="file"
-                      id="image"
-                      name="image"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                    <LibraryAddIcon className="addIcon" />
-                  </label>
-                </div>
-              ) : (
-                <label htmlFor="image" className="cv-image-placeholder">
                   <LibraryAddIcon className="addIcon" />
                 </label>
-              )}
-              <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
+              </div>
             </div>
+
             <div className="cv-header-text">
               <div className="field">
                 <input
@@ -317,12 +312,11 @@ const CVForm = () => {
           </div>
         </div>
       </PDFExport>
-
-      {/* Add input fields for github, linkedin, portfolio */}
-
-      <button className="btn" onClick={handleExportPDF}>
-        Export CV as PDF
-      </button>
+      <div className="export-btn">
+        <button className="btn" onClick={handleExportPDF}>
+          Export CV as PDF
+        </button>
+      </div>
     </div>
   );
 };

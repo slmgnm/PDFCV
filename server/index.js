@@ -4,7 +4,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 
 const allowedOrigins = [
-  "https://pdfcv-7t9wuj1mm-slmgnm.vercel.app",
+  "https://pdfcv-fe.vercel.app/",
   "http://localhost:3000",
 ];
 

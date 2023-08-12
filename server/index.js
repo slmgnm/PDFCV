@@ -3,7 +3,6 @@ const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 
-app.use(cors());
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
@@ -12,6 +11,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 console.log("configuration", configuration);
 // Set up the ChatGPT endpoint

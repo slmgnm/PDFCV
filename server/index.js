@@ -3,22 +3,23 @@ const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 
-const allowedOrigins = [
-  "https://pdfcv-fe.vercel.app/",
-  "http://localhost:3000",
-];
+// const allowedOrigins = [
+//   "https://pdfcv-fe.vercel.app/",
+//   "http://localhost:3000",
+// ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (allowedOrigins.includes(origin) || !origin) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
+app.use(cors());
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({

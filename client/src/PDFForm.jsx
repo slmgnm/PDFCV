@@ -7,8 +7,12 @@ import { PDFExport } from "@progress/kendo-react-pdf";
 import OpenAI from "./Openai.jsx";
 // import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SocialLinks from "./SocialLinks";
 import placeholder from "./assets/user.png";
+import RichTextEditor from "./RichText";
+import { IconButton } from "@mui/material";
 const CVForm = () => {
   const pdfExportComponent = useRef(null);
   const storedData = localStorage.getItem("formData");
@@ -44,6 +48,19 @@ const CVForm = () => {
       [socialMedia]: link,
     }));
   };
+  const handleBio = (newBio) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      bio: newBio,
+    }));
+  };
+  const addField = (fieldName) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: [...prevState[fieldName], ""],
+    }));
+  };
+
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -83,29 +100,26 @@ const CVForm = () => {
       };
     });
   };
-  const handleExperienceChange = (index, event) => {
-    const { value } = event.target;
+  const handleExperienceChange = (index, newValue) => {
     setFormData((prevState) => {
-      const newExperience = [...prevState.experience];
-      newExperience[index] = value;
-      if (index === newExperience.length - 1 && value.trim() !== "") {
-        // Add a new empty language field if the last field is not empty
-        newExperience.push("");
+      const newExp = [...prevState.experience];
+      newExp[index] = newValue;
+      if (index === newExp.length - 1 && newValue.trim() !== "") {
+        newExp.push("");
       }
       return {
         ...prevState,
-        experience: newExperience,
+        experience: newExp,
       };
     });
   };
 
-  const handleEdChange = (index, event) => {
-    const { value } = event.target;
+  const handleEdChange = (index, newValue) => {
     setFormData((prevState) => {
       const newEd = [...prevState.education];
-      newEd[index] = value;
-      if (index === newEd.length - 1 && value.trim() !== "") {
-        // Add a new empty language field if the last field is not empty
+      newEd[index] = newValue;
+      if (index === newEd.length - 1 && newValue.trim() !== "") {
+        // Add a new empty education field if the last field is not empty
         newEd.push("");
       }
       return {
@@ -114,6 +128,7 @@ const CVForm = () => {
       };
     });
   };
+
   const handleSkillsChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevState) => {
@@ -129,15 +144,21 @@ const CVForm = () => {
       };
     });
   };
-  const handleTextareaInput = (event) => {
-    event.target.style.height = "auto";
-    event.target.style.height = event.target.scrollHeight + "px";
-  };
 
   const handleExportPDF = () => {
     const pdfName = `CV-${formData.name}.pdf`;
     pdfExportComponent.current.save(pdfName);
     // console.log("current", pdfExportComponent.current);
+  };
+  const removeField = (fieldName, index) => {
+    setFormData((prevState) => {
+      const newField = [...prevState[fieldName]];
+      newField.splice(index, 1);
+      return {
+        ...prevState,
+        [fieldName]: newField,
+      };
+    });
   };
 
   return (
@@ -145,8 +166,7 @@ const CVForm = () => {
       <PDFExport
         ref={pdfExportComponent}
         paperSize="auto"
-        scale={1}
-        style={{ height: "auto" }}
+        style={{ height: "auto", width: "8.5in" }}
         fileName={`${formData.name}-Resume`}
       >
         <div className="container">
@@ -265,50 +285,62 @@ const CVForm = () => {
             </div>
           </div>
           <div className="right">
-            <h2>Bio</h2>
-            <hr />
-            <div>
-              <OpenAI formData={formData} />
+            <div className="bio">
+              <h2>Bio</h2>
+              <hr />
+              <div>
+                <OpenAI formData={formData} onChange={handleBio} />
+              </div>
             </div>
-
-            <h2>Experience</h2>
-            <hr />
-            {formData.experience.map((exp, index) => (
-              <div key={index}>
-                <textarea
-                  className=""
-                  type="text"
-                  rows="1"
-                  style={{ resize: "none", overflow: "hidden" }}
-                  onInput={handleTextareaInput}
-                  name={`experience-${index}`}
-                  value={exp}
-                  onChange={(event) => handleExperienceChange(index, event)}
-                  placeholder="Start date-   Your Most recent Position here
-                  End date    Company name 
-                  -Task Name
-                  "
-                />
-              </div>
-            ))}
-            <h2>Education</h2>
-            <hr />
-            {formData.education.map((exp, index) => (
-              <div key={index}>
-                <textarea
-                  className=""
-                  type="text"
-                  rows="1"
-                  style={{ resize: "none", overflow: "hidden" }}
-                  onInput={handleTextareaInput}
-                  name={`education-${index}`}
-                  value={exp}
-                  onChange={(event) => handleEdChange(index, event)}
-                  placeholder=" 2018-    Degree name
-                  End date    Institute name"
-                />
-              </div>
-            ))}
+            <div className="experience">
+              <h2>Experience</h2>
+              <hr />
+              {formData.experience.map((exp, index) => (
+                <div className="field" key={index}>
+                  <RichTextEditor
+                    value={exp}
+                    onChange={(newExp) => handleExperienceChange(index, newExp)}
+                  />
+                  <button
+                    className="removeField"
+                    aria-label="delete"
+                    color="primary"
+                  >
+                    <RemoveCircleOutlineIcon
+                      onClick={() => removeField("experience", index)}
+                    />
+                  </button>
+                </div>
+              ))}
+              <button className="addField">
+                <AddCircleOutlineIcon onClick={() => addField("experience")} />
+              </button>
+            </div>
+            <div className="education">
+              <h2>Education</h2>
+              <hr />
+              {formData.education.map((edu, index) => (
+                <div className="field" key={index}>
+                  <RichTextEditor
+                    value={edu}
+                    onChange={(newEd) => handleEdChange(index, newEd)}
+                    placeholder="education"
+                  />
+                  <button
+                    className="removeField"
+                    aria-label="delete"
+                    color="primary"
+                  >
+                    <RemoveCircleOutlineIcon
+                      onClick={() => removeField("education", index)}
+                    />
+                  </button>
+                </div>
+              ))}
+              <button className="addField">
+                <AddCircleOutlineIcon onClick={() => addField("education")} />
+              </button>
+            </div>
           </div>
         </div>
       </PDFExport>

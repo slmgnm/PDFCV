@@ -2,6 +2,7 @@
   padding-top: 1em;
   padding-bottom: 1em;
 }
+
 .btn {
   display: block;
   height: fit-content;
@@ -18,6 +19,35 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+.addField {
+  display: none;
+  background-color: transparent;
+  border: none;
+  padding: 2em;
+  cursor: pointer;
+}
+.bio {
+  margin-bottom: 5em;
+}
+.experience {
+  margin-bottom: 5em;
+}
+.right:hover .addField {
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.removeField {
+  display: none;
+  background-color: transparent;
+  border: none;
+  width: 3em;
+}
+.field:hover .removeField {
+  display: block;
+  cursor: pointer;
+}
 
 #bioSubmit svg {
   position: "absolute";
@@ -32,16 +62,17 @@
 }
 .field {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 1px;
 }
 .input {
   background-color: rgb(48, 48, 50);
+  font-size: 2.5em;
 
-  width: 100%;
+  /* width: 100%; */
   border: none;
   color: #fff;
-  font-size: 2em;
+  /* font-size: 1em; */
   margin-bottom: 0.1em;
 }
 
@@ -50,9 +81,8 @@
   border: none;
   width: 100%;
   color: #fff;
+  font-size: 1.5em;
   margin-bottom: 0.1em;
-
-  font-size: 1.2em;
 }
 
 input:-webkit-autofill,
@@ -69,10 +99,10 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgb(48, 48, 50) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
-.field > textarea {
+/* .field > textarea {
   height: fit-content;
   min-height: 3em;
-}
+} */
 #github-tooltip {
   /* top: 0; */
   /* left: 30%; */
@@ -89,15 +119,18 @@ textarea {
   border: none;
   overflow: auto;
   outline: none;
-  width: 90%;
+  /* width: 100%; */
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  min-height: 4em;
+  min-height: 5em;
   resize: none;
-  padding-right: 2em;
-  margin-right: 3em;
-  margin-bottom: 1.5em;
+  /* font-size: xx-small; */
+  /* padding-right: 2em; */
+  /* margin-right: 3em; */
+  /* padding: 1em; */
+  /* margin-bottom: 1em; */
+  z-index: 999;
 }
 textarea:hover {
   border: #ffb600 dashed 1px;
@@ -114,7 +147,7 @@ textarea:hover {
   color: #fff;
 
   margin-bottom: 0.1em;
-  font-size: 1em;
+  /* font-size: 1em; */
 }
 .field__label {
   /* font-size: 15px; */
@@ -130,14 +163,8 @@ textarea:hover {
 .container:hover {
   border: dashed 1px #ffb600;
 }
-
-.container {
-  display: flex;
-  flex-direction: row;
-  min-height: 100vh;
-  /* width: 8.5in; */
-  word-wrap: break-word;
-  white-space: normal;
+#image {
+  display: none;
 }
 .upload-icon {
   position: absolute;
@@ -177,42 +204,50 @@ textarea:hover {
   justify-content: space-evenly;
 }
 
-.container > * {
+/* .k-pdf-export .left{
+width: 30;
+} */
+/* .container > * {
   flex-shrink: 0;
+} */
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  max-width: 8.5in; /* Set the maximum width */
+  margin: 0 auto; /* Center the container */
 }
+
 .left {
   display: flex;
   flex-direction: column;
-  /* width: 264px; */
+  width: 30%;
+  max-width: 30%;
   background-color: rgb(48, 48, 50);
   color: white;
   margin-left: 0;
   padding-left: 0;
-
   text-align: left;
   flex: 1;
   padding-top: 6em;
 }
-hr {
-  height: 2px;
-  border-width: 0;
-  color: #ffb600;
-  background-color: #ffb600;
-}
-hr {
-  height: 2px;
-  border-width: 0;
-  color: #ffb600;
-  background-color: #ffb600;
-}
+
 .right {
-  width: 70%;
+  width: 70%; /* Set the right div to 70% width */
   padding-left: 2em;
-  padding-top: 6em;
   padding-right: 2em;
+  padding-top: 6em;
   box-sizing: border-box;
-  /* font-size: 13px; */
   background-color: #e8e6e6;
+}
+
+hr {
+  height: 2px;
+  border-width: 0;
+  color: #ffb600;
+  background-color: #ffb600;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .cv-header {
@@ -228,8 +263,8 @@ hr {
   display: inline-block;
   align-items: center;
   justify-content: center;
-  width: 262px;
-  height: 256px;
+  max-width: 262px;
+  /* height: 256px; */
   overflow: hidden;
 
   padding: 0;
@@ -252,12 +287,10 @@ hr {
 }
 
 .cv-header-text h2 {
-  font-size: 2em;
   margin-bottom: 0.5em;
 }
 
 .cv-header-text h3 {
-  font-size: 1.5em;
   font-weight: normal;
   margin-bottom: 0.5em;
 }
@@ -333,10 +366,6 @@ li {
     margin-right: 0;
     padding-right: 0;
   }
-  .left {
-    margin-left: 0;
-    padding-left: 0;
-  }
 
   .right {
     width: 70%;
@@ -367,7 +396,7 @@ li {
   textarea {
     margin-right: 0;
     padding-right: 0;
-    font-size: 0.3em;
+    /* font-size: 0.3em; */
   }
   input {
     padding-top: 0.3em;
@@ -382,14 +411,14 @@ li {
     align-items: center;
   }
   h4 {
-    font-size: x-small;
+    /* font-size: x-small; */
   }
   .input {
-    font-size: 0.7em;
+    /* font-size: 0.7em; */
     padding-bottom: 0.3;
   }
   .subtitleInput {
-    font-size: 0.5em;
+    /* font-size: 0.5em; */
   }
   .cv-header-text {
     padding: 0.5em;
@@ -411,16 +440,13 @@ li {
     color: #fff;
     margin-bottom: 0.1em;
     padding-bottom: 0.4em;
-    font-size: 0.5em;
   }
   .right {
     width: 70%;
     padding-left: 1em;
     padding-right: 0;
   }
-  .right h2 {
-    font-size: x-small;
-  }
+
   hr {
     margin-top: 0.2em;
     margin-bottom: 0.2em;

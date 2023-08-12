@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ReactComponent as PlusIcon } from "./assets/plus-solid.svg";
-function OpenAI({ formData }) {
+import RichTextEditor from "./RichText";
+function OpenAI({ formData, onChange }) {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
 
@@ -39,36 +40,30 @@ Bio:
 
     await generateBioPrompt();
 
+    console.log("Sending request to server...");
+
     try {
-      // Send a request to the server with the prompt
       const res = await axios.post("http://localhost:8080/chat", { prompt });
-      // Update the response state with the server's response
+      console.log("Server response:", res.data);
+
       setResponse(res.data);
+      onChange(res.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error sending request:", err);
     }
   };
-  const handleTextareaInput = () => {
-    const textarea = document.querySelector("textarea[name='bio']");
-    textarea.style.height = "auto"; 
-    textarea.style.height = textarea.scrollHeight + "px"; 
-  };
+
   console.log("Response", response);
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div style={{ position: "relative" }}>
-          <textarea
-            className=""
-            type="text"
-            rows="1"
-            style={{ resize: "none", overflow: "hidden" }}
-            onInput={handleTextareaInput}
-            name={"bio"}
-            value={response}
-            onChange={(e) => setResponse(e.target.value)}
+          <RichTextEditor
+            value={formData.bio}
+            onChange={onChange}
             placeholder="Add an AI-generated bio or write your own"
           />
+
           <button
             type="submit"
             id="bioSubmit"

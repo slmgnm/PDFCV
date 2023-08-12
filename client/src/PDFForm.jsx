@@ -194,7 +194,7 @@ const CVForm = () => {
             <div className="cv-header-text">
               <div className="field">
                 <input
-                  className="input"
+                  className="name"
                   type="text"
                   name="name"
                   placeholder="name"

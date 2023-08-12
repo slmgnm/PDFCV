@@ -65,14 +65,13 @@
   flex-direction: row;
   margin-bottom: 1px;
 }
-.input {
+.name {
   background-color: rgb(48, 48, 50);
-  font-size: 2.5em;
+  font-size: 1.7em;
 
   /* width: 100%; */
   border: none;
   color: #fff;
-  /* font-size: 1em; */
   margin-bottom: 0.1em;
 }
 
@@ -81,7 +80,7 @@
   border: none;
   width: 100%;
   color: #fff;
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin-bottom: 0.1em;
 }
 
@@ -192,6 +191,7 @@ textarea:hover {
 }
 
 .lang {
+  font-size: 1em;
   margin-top: 1em;
 }
 .skills {
@@ -410,31 +410,44 @@ li {
     flex-wrap: wrap;
     align-items: center;
   }
-  h4 {
-    /* font-size: x-small; */
-  }
-  .input {
-    /* font-size: 0.7em; */
+
+  .name {
+    font-size: 0.6em;
     padding-bottom: 0.3;
   }
+  .bio h2 {
+    font-size: 1em;
+  }
+  .experience h2 {
+    font-size: 1em;
+  }
+  .education h2 {
+    font-size: 1em;
+  }
   .subtitleInput {
-    /* font-size: 0.5em; */
+    font-size: 0.5em;
   }
   .cv-header-text {
     padding: 0.5em;
   }
   .lang {
+    font-size: 0.6em;
     text-align: left;
   }
   .skills {
+    font-size: 0.6em;
     text-align: left;
   }
   .btn {
     padding: 8px 30px;
   }
+  .richTextEditorContainer {
+    font-size: 0.2em;
+  }
   .inputContact {
     background-color: rgb(48, 48, 50);
-    font-family: "Roboto Mono", monospac 400;
+    /* font-family: "Roboto Mono", monospac 400; */
+    font-size: 0.4em;
     border: none;
     width: 100%;
     color: #fff;

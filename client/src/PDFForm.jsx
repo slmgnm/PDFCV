@@ -1,18 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-// import portfolioSVG from "./portfolio.svg";
+
 import "./PDFForm.css";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import OpenAI from "./Openai.jsx";
-// import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SocialLinks from "./SocialLinks";
 import placeholder from "./assets/user.png";
 import RichTextEditor from "./RichText";
-import { IconButton } from "@mui/material";
 const CVForm = () => {
   const pdfExportComponent = useRef(null);
   const storedData = localStorage.getItem("formData");

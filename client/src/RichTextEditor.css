@@ -33,7 +33,7 @@
   border: none;
 }
 @media only screen and (max-width: 468px) {
-  .ql-editor {
-    font-size: 0.6em;
+  .ql-toolbar.ql-snow .ql-formats {
+    margin-right: 0;
   }
 }

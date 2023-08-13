@@ -44,7 +44,11 @@ Bio:
 
     try {
       const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
-    const res = await axios.post(`${backendUrl}/chat`, { prompt });
+      const res = await axios.post(`${backendUrl}/chat`, { prompt }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       setResponse(res.data);
       onChange(res.data);
     } catch (err) {

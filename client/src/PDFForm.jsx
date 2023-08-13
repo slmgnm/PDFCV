@@ -296,6 +296,7 @@ const CVForm = () => {
                   <RichTextEditor
                     value={exp}
                     onChange={(newExp) => handleExperienceChange(index, newExp)}
+                    placeholder={"Add an experience"}
                   />
                   <button
                     className="removeField"
@@ -320,7 +321,7 @@ const CVForm = () => {
                   <RichTextEditor
                     value={edu}
                     onChange={(newEd) => handleEdChange(index, newEd)}
-                    placeholder="education"
+                    placeholder="Add an education"
                   />
                   <button
                     className="removeField"

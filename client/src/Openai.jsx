@@ -43,8 +43,9 @@ Bio:
     console.log("Sending request to server...");
 
     try {
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
-    const res = await axios.post(`${backendUrl}/chat`, { prompt });
+      const backendUrl =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
+      const res = await axios.post(`${backendUrl}/chat`, { prompt });
       setResponse(res.data);
       onChange(res.data);
     } catch (err) {
@@ -60,7 +61,7 @@ Bio:
           <RichTextEditor
             value={formData.bio}
             onChange={onChange}
-            placeholder="Add an AI-generated bio or write your own"
+            placeholder="Click + to add an AI-generated bio after filling other fields or write your own"
           />
 
           <button

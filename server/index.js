@@ -13,7 +13,7 @@ const openai = new OpenAIApi(configuration);
 const app = express();
 app.use(
   cors({
-    origin: ["https://pdfcv-fe-slmgnm.vercel.app/"],
+    origin: ["https://pdfcv-fe.vercel.app"],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

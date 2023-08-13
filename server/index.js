@@ -11,13 +11,13 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const app = express();
-const corsOptions = {
-  origin: "https://pdfcv-fe.vercel.app", // Change this to your frontend URL in production
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: ["https://pdfcv-fe-slmgnm.vercel.app/"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(bodyParser.json());
 // Set up the ChatGPT endpoint
 app.post("/chat", async (req, res) => {
